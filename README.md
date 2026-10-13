@@ -44,7 +44,8 @@ music beds in nine moods, shipped inside the app. Every file is CC0 or public
 domain, so it is free to use in your Reels, monetised or not, with no credit
 needed: Freesound (CC0 only), Kenney audio packs (CC0) and FreePD music
 (public domain). Each file is listed with its source in
-[sounds/CREDITS.md](sounds/CREDITS.md).
+[sounds/CREDITS.md](sounds/CREDITS.md). Listen to all of them, on the phone or
+laptop: **https://rahulwala10.github.io/The-Studio_SoundSFX/sounds/listen.html**
 
 ## Releases
 

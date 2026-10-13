@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sound library · The Studio Sound</title>
+<meta name="description" content="Listen to every sound effect and music bed in The Studio Sound, with where each one comes from.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --paper: #faf8f4; --paper-2: #f2eee6; --ink: #1c1916; --ink-2: #403a33; --ink-3: #5a544b;
+  --rule: #ddd6c9; --accent: #2f4dc7; --accent-soft: #e4e8f8;
+  --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #08080b; --paper-2: #131318; --ink: #f5f5f5; --ink-2: #cccccc; --ink-3: #a1a1a1;
+    --rule: #2a2a33; --accent: #7d97ee; --accent-soft: #171c33; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #08080b; --paper-2: #131318; --ink: #f5f5f5; --ink-2: #cccccc; --ink-3: #a1a1a1;
+  --rule: #2a2a33; --accent: #7d97ee; --accent-soft: #171c33; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-underline-offset: 2px; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 860px; margin-inline: auto; padding: 0 16px 64px; }
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+.mark { font: 700 1.05rem/1 var(--font-display); letter-spacing: -0.03em; color: var(--ink); text-decoration: none; }
+.mark span { color: var(--accent); }
+.bar nav { display: flex; gap: 16px; font-size: 0.9rem; }
+h1 { font: 800 clamp(2rem, 6vw, 3.1rem)/1.02 var(--font-display); letter-spacing: -0.035em; margin: 40px 0 12px; max-width: 16ch; }
+.lead { color: var(--ink-2); max-width: 60ch; margin: 0 0 8px; }
+.note { color: var(--ink-3); font-size: 0.875rem; max-width: 64ch; margin: 0; }
+.switch { display: inline-flex; gap: 4px; padding: 4px; margin: 28px 0 8px; border: 1px solid var(--rule); border-radius: 999px; background: var(--paper-2); }
+.switch button { font: 600 0.9rem/1 var(--font-body); color: var(--ink-2); background: none; border: 0; border-radius: 999px; padding: 10px 18px; cursor: pointer; }
+.switch button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+section.group { margin-top: 30px; }
+section.group h2 { font: 700 1.25rem/1.2 var(--font-display); letter-spacing: -0.02em; margin: 0 0 2px; }
+section.group p.use { margin: 0 0 10px; color: var(--ink-3); font-size: 0.875rem; }
+ul.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+ul.list li { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.play { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--rule); background: var(--paper-2); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+.play svg { width: 16px; height: 16px; }
+.play[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.name { min-width: 0; }
+.name b { display: block; font-weight: 600; font-size: 0.95rem; }
+.name small { display: block; color: var(--ink-3); font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.meta { color: var(--ink-3); font-size: 0.8rem; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.progress { height: 2px; background: var(--accent); width: 0; grid-column: 2 / 4; margin-top: -4px; }
+footer { margin-top: 48px; color: var(--ink-3); font-size: 0.85rem; }
+@media (prefers-reduced-motion: no-preference) { .play { transition: background-color .15s, color .15s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="../">The Studio <span>Sound</span></a>
+    <nav><a href="../">Open the editor</a><a href="../how-it-works.html">How it works</a></nav>
+  </header>
+
+  <h1>The sound library</h1>
+  <p class="lead" id="lead">Every sound effect and music bed the Sounds tab can use. Tap one to hear it at the level it was prepared at.</p>
+  <p class="note">All CC0 or public domain: free to use in your Reels, monetised or not, no credit needed. Each one links to where it came from.</p>
+
+  <div class="switch" role="group" aria-label="Show">
+    <button type="button" data-show="sfx" aria-pressed="true">Sound effects</button>
+    <button type="button" data-show="music" aria-pressed="false">Music</button>
+  </div>
+
+  <div id="sfx"></div>
+  <div id="music" hidden></div>
+
+  <footer>
+    <p>The Studio Sound by Rahul Wala, built on <a href="https://github.com/francozanardi/tscaps" target="_blank" rel="noopener noreferrer">tscaps</a> by Franco Zanardi. Full credits in <a href="CREDITS.md">CREDITS.md</a>.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var KINDS = [
+    ['whoosh-short', 'Quick whoosh', 'A new point after a pause, or a cut in the video'],
+    ['whoosh', 'Whoosh', 'A longer pause before a new point (Punchy)'],
+    ['whoosh-long', 'Long whoosh', 'A big change of scene'],
+    ['swipe', 'Swipe', 'A soft move to the next point (Subtle)'],
+    ['riser', 'Riser', 'Builds into the hook (Punchy)'],
+    ['riser-hit', 'Riser hit', 'A build that lands on a word'],
+    ['reverse', 'Reverse swell', 'A soft build'],
+    ['hit', 'Hit', 'Lands the hook, or a heavy line in Punchy'],
+    ['braam', 'Big hit', 'A dark, dramatic hook (Punchy)'],
+    ['drop', 'Bass drop', 'A big reveal'],
+    ['thud', 'Thud', 'A heavy word, or a painful number'],
+    ['pop', 'Pop', 'A stand-out word in a sentence with nothing else'],
+    ['click', 'Click', 'List items: first, second, third'],
+    ['tick', 'Tick', 'A plain number (Punchy)'],
+    ['ding', 'Ding', 'The call to action (Punchy)'],
+    ['notify', 'Notification', 'The call to action (Subtle), or a message'],
+    ['money', 'Money', 'Money or a price'],
+    ['camera', 'Camera', 'A photo moment'],
+    ['typing', 'Typing', 'Under typewriter captions, very quietly'],
+    ['scratch', 'Record scratch', 'The twist (Punchy)'],
+    ['sparkle', 'Sparkle', 'Good news (Subtle)'],
+    ['success', 'Ta-da', 'Good news (Punchy)'],
+    ['boing', 'Boing', 'A joke, only in playful Reels (Punchy)'],
+    ['sad-trombone', 'Sad trombone', 'A fail, only in playful Reels (Punchy)'],
+    ['laugh', 'Laugh', 'Swap in for a joke'],
+    ['applause', 'Applause', 'Swap in for a big win'],
+    ['crickets', 'Crickets', 'Swap in for an awkward silence'],
+    ['glitch', 'Glitch', 'Swap in for tech moments'],
+    ['heartbeat', 'Heartbeat', 'Swap in for tension'],
+    ['drumroll', 'Drum roll', 'Swap in before a reveal'],
+    ['page', 'Page turn', 'Swap in for a new chapter'],
+    ['vibrate', 'Phone buzz', 'Swap in for a message'],
+    ['jingle', 'Sting', 'The end of an upbeat Reel (Punchy)'],
+    ['ambience-office', 'Office ambience', 'A quiet room tone']
+  ];
+  var MOODS = [
+    ['upbeat', 'Upbeat', 'Positive and energetic'],
+    ['chill', 'Chill', 'Calm, or positive and relaxed'],
+    ['inspiring', 'Inspiring', 'A struggle that ends well'],
+    ['emotional', 'Emotional', 'Serious and reflective'],
+    ['tension', 'Tension', 'Serious and urgent'],
+    ['cinematic', 'Cinematic', 'Big and story-like'],
+    ['playful', 'Playful', 'Light and funny'],
+    ['tech', 'Tech', 'A tech topic told plainly'],
+    ['desi', 'Desi', 'About India and home']
+  ];
+  var PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>';
+  var STOP = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3.5" width="9" height="9" rx="1" fill="currentColor"/></svg>';
+  var audio = new Audio();
+  audio.preload = 'none';
+  var current = null;
+
+  function el(tag, attrs, html) {
+    var e = document.createElement(tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function secs(d) { return d < 60 ? d.toFixed(1) + ' s' : Math.floor(d / 60) + ':' + String(Math.round(d % 60)).padStart(2, '0'); }
+  function sourceName(s) {
+    var m = /"(.+)" by (.+?) \(CC0\)/.exec(s);
+    if (m) return '“' + m[1].replace(/\.(wav|mp3|aif|aiff|ogg)$/i, '') + '” by ' + m[2];
+    m = /^Kenney (.+?) \/ (.+?) \(CC0\)/.exec(s);
+    if (m) return 'Kenney ' + m[1].replace(/-/g, ' ') + ': ' + m[2];
+    return s.replace(/^FreePD \(public domain, CC0\): /, 'FreePD: ');
+  }
+  function stop() {
+    audio.pause();
+    if (current) { current.btn.setAttribute('aria-pressed', 'false'); current.btn.innerHTML = PLAY; current.bar.style.width = '0'; current.btn.setAttribute('aria-label', 'Play ' + current.label); }
+    current = null;
+  }
+  function row(file, label, sub, meta, href) {
+    var li = el('li');
+    var btn = el('button', { type: 'button', class: 'play', 'aria-pressed': 'false', 'aria-label': 'Play ' + label }, PLAY);
+    var name = el('div', { class: 'name' }, '<b>' + esc(label) + '</b><small>' + (href ? '<a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + esc(sub) + '</a>' : esc(sub)) + '</small>');
+    var bar = el('div', { class: 'progress' });
+    li.append(btn, name, el('span', { class: 'meta' }, esc(meta)), bar);
+    btn.addEventListener('click', function () {
+      var same = current && current.btn === btn;
+      stop();
+      if (same) return;
+      current = { btn: btn, bar: bar, label: label };
+      audio.src = file;
+      audio.currentTime = 0;
+      btn.setAttribute('aria-pressed', 'true');
+      btn.innerHTML = STOP;
+      btn.setAttribute('aria-label', 'Stop ' + label);
+      audio.play().catch(function () { stop(); });
+    });
+    return li;
+  }
+  audio.addEventListener('timeupdate', function () {
+    if (current && audio.duration) current.bar.style.width = (100 * audio.currentTime / audio.duration) + '%';
+  });
+  audio.addEventListener('ended', stop);
+
+  function group(target, title, use, items) {
+    if (!items.length) return;
+    var sec = el('section', { class: 'group' });
+    sec.append(el('h2', {}, esc(title)), el('p', { class: 'use' }, esc(use)));
+    var ul = el('ul', { class: 'list' });
+    items.forEach(function (li) { ul.append(li); });
+    sec.append(ul);
+    target.append(sec);
+  }
+
+  fetch('library.json').then(function (r) { return r.json(); }).then(function (lib) {
+    var sfx = document.getElementById('sfx');
+    KINDS.forEach(function (k) {
+      var list = lib.sounds.filter(function (s) { return s.role === k[0]; });
+      group(sfx, k[1], k[2], list.map(function (s, i) {
+        return row(s.file, k[1] + ' ' + (i + 1), sourceName(s.source), secs(s.duration), s.url);
+      }));
+    });
+    var music = document.getElementById('music');
+    MOODS.forEach(function (m) {
+      var list = lib.music.filter(function (t) { return t.mood === m[0]; });
+      group(music, m[1], m[2], list.map(function (t) {
+        return row(t.file, t.title, sourceName(t.source), secs(t.duration) + ', ' + t.tempo + ' bpm', t.url);
+      }));
+    });
+    document.getElementById('lead').textContent = lib.sounds.length + ' sound effects and ' + lib.music.length + ' music beds the Sounds tab can use. Tap one to hear it at the level it was prepared at.';
+  }).catch(function () {
+    document.getElementById('sfx').append(el('p', { class: 'note' }, 'The list could not load. Open this page from the app (localhost:5179 on the laptop, or the website), not as a file.'));
+  });
+
+  document.querySelectorAll('.switch button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      stop();
+      document.querySelectorAll('.switch button').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+      document.getElementById('sfx').hidden = b.dataset.show !== 'sfx';
+      document.getElementById('music').hidden = b.dataset.show !== 'music';
+    });
+  });
+})();
+</script>
+</body>
+</html>
