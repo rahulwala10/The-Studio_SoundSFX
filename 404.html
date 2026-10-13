@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function () {
+        // GitHub Pages may serve this site under a differently-cased path.
+        // The router needs the exact base, so normalise it once.
+        var base = '/The-Studio_SoundSFX/';
+        var p = location.pathname;
+        if (p.toLowerCase().indexOf(base.toLowerCase()) === 0 && p.indexOf(base) !== 0) {
+          location.replace(base + p.slice(base.length) + location.search + location.hash);
+        } else if (p + '/' === base) {
+          location.replace(base + location.search + location.hash);
+        }
+      })();
+    </script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/The-Studio_SoundSFX/favicon.svg" />
+    <link rel="apple-touch-icon" href="/The-Studio_SoundSFX/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Studio Sound" />
+    <meta name="application-name" content="The Studio Sound" />
+    <title>The Studio Sound · captions, sound effects and music for Reels</title>
+    <meta name="description" content="The Studio Sound: captions, sound effects and background music placed to fit what you say, for Instagram Reels, by Rahul Wala. Built on tscaps by Franco Zanardi." />
+    <meta name="theme-color" content="#08080B" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('tscaps:theme');
+          var theme = stored === 'light' || stored === 'dark'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (_) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+    <style>
+      .app-boot-splash {
+        position: fixed;
+        inset: 0;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgb(8, 8, 11);
+        color: rgb(245, 245, 245);
+      }
+      [data-theme="light"] .app-boot-splash {
+        background: rgb(250, 248, 244);
+        color: rgb(20, 20, 24);
+      }
+      .app-boot-splash__mark {
+        display: inline-flex;
+        align-items: baseline;
+      }
+      .app-boot-splash__accent { color: rgb(91, 123, 230); }
+      .app-boot-splash__dot {
+        color: rgb(91, 123, 230);
+        margin-left: 1px;
+        animation: app-boot-splash-dot-blink 1.4s ease-in-out infinite;
+      }
+      @keyframes app-boot-splash-dot-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.25; }
+      }
+    </style>
+    <script type="module" crossorigin src="/The-Studio_SoundSFX/assets/index-BHx5J734.js"></script>
+    <link rel="modulepreload" crossorigin href="/The-Studio_SoundSFX/assets/index-oq4yXTHR.js">
+  </head>
+  <body>
+    <div id="root">
+      <div class="app-boot-splash" role="status" aria-label="Loading">
+        <span class="app-boot-splash__mark">
+          <span>The Studio</span>
+          <span class="app-boot-splash__accent" style="margin-left:0.25em">Sound</span>
+          <span class="app-boot-splash__dot">.</span>
+        </span>
+      </div>
+    </div>
+  </body>
+</html>

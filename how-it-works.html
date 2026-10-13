@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Where The Studio Sound runs, where your work is saved, and how a video becomes a Reel with captions, sound effects and music.">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<title>How The Studio Sound works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* Layout: one left-aligned reading column; the flowchart breaks wider as the page's one bold element. */
+:root {
+  --paper: #faf8f4;      /* the app's light ground */
+  --paper-2: #f2eee6;    /* raised panels */
+  --ink: #1c1916;        /* text */
+  --ink-2: #403a33;      /* secondary text */
+  --ink-3: #5a544b;      /* notes */
+  --rule: #ddd6c9;       /* lines */
+  --accent: #2f4dc7;     /* the app's blue */
+  --accent-soft: #e4e8f8;
+  --gold: #8a5d00;       /* the stand-out word */
+  --screen: #101014;     /* the caption demo's video frame */
+  --screen-ink: #f5f5f5;
+  --screen-gold: #ffd27a;
+  --font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #08080b; --paper-2: #131318; --ink: #f5f5f5; --ink-2: #cccccc; --ink-3: #a1a1a1;
+    --rule: #2a2a33; --accent: #7d97ee; --accent-soft: #171c33; --gold: #ffd27a;
+    --screen: #000000; --screen-ink: #f5f5f5; --screen-gold: #ffd27a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #08080b; --paper-2: #131318; --ink: #f5f5f5; --ink-2: #cccccc; --ink-3: #a1a1a1;
+  --rule: #2a2a33; --accent: #7d97ee; --accent-soft: #171c33; --gold: #ffd27a;
+  --screen: #000000; --screen-ink: #f5f5f5; --screen-gold: #ffd27a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+.page { padding-inline: 20px; padding-block: 0 48px; }
+.wrap { max-width: 1040px; margin-inline: auto; }
+.read { max-width: 680px; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Top bar */
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--rule); }
+.mark { font: 700 1.15rem/1 var(--font-display); letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+.mark span { color: var(--accent); }
+.open { font-weight: 600; font-size: 0.9rem; }
+
+/* Type scale: 0.8125 / 0.9375 / 1 / 1.25 / 1.75 / clamp(2.2,6vw,3.6) */
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.025em; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 1.02; font-weight: 800; }
+h2 { font-size: 1.75rem; line-height: 1.15; font-weight: 700; }
+h3 { font-size: 1.0625rem; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; }
+p { margin: 0; }
+.lead { font-size: 1.125rem; color: var(--ink-2); }
+.note { font-size: 0.875rem; color: var(--ink-3); }
+
+section { padding-block: 56px 0; display: flex; flex-direction: column; gap: 20px; }
+.hero { padding-block: 48px 8px; gap: 22px; }
+
+/* Quick answers */
+.answers { display: grid; gap: 0; margin: 8px 0 0; border-top: 1px solid var(--rule); }
+.answers div { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); gap: 4px 24px; padding-block: 14px; border-bottom: 1px solid var(--rule); }
+.answers dt { font-weight: 600; }
+.answers dd { margin: 0; color: var(--ink-2); }
+@media (max-width: 640px) { .answers div { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- The flowchart ---------- */
+.flow { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 8px; }
+.devices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 720px) { .devices { grid-template-columns: minmax(0, 1fr); } }
+.node {
+  background: var(--paper-2); border: 1px solid var(--rule); border-radius: 14px;
+  padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; min-width: 0;
+}
+.node .where { font-size: 0.8125rem; color: var(--ink-3); }
+.node code, .path { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: 0.8125rem; overflow-wrap: anywhere; color: var(--ink-2); }
+.arrow { display: flex; justify-content: center; padding-block: 6px; }
+.arrow svg { width: 24px; height: 40px; }
+.arrow svg path { stroke: var(--ink-3); fill: none; stroke-width: 1.6; }
+.arrow-label { display: flex; align-items: center; justify-content: center; gap: 10px; padding-block: 4px; font-size: 0.8125rem; color: var(--ink-3); text-align: center; }
+
+.device { position: relative; overflow: hidden; }
+.boundary {
+  position: relative; border: 2px dashed var(--accent); border-radius: 22px;
+  padding: 26px 22px 22px; background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); gap: 28px;
+}
+@media (max-width: 860px) { .boundary { grid-template-columns: minmax(0, 1fr); padding: 22px 16px 18px; } }
+.boundary-title { font: 700 1.25rem/1.2 var(--font-display); color: var(--accent); letter-spacing: -0.015em; }
+.boundary-sub { font-size: 0.9375rem; color: var(--ink-2); margin-top: 4px; }
+
+.steps { list-style: none; margin: 18px 0 0; padding: 0; counter-reset: step; display: flex; flex-direction: column; }
+.steps li { counter-increment: step; position: relative; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 14px; padding-bottom: 18px; }
+.steps li::before {
+  content: counter(step); width: 2.25rem; height: 2.25rem; border-radius: 50%;
+  display: grid; place-items: center; background: var(--paper); border: 2px solid var(--accent);
+  color: var(--accent); font: 700 0.95rem/1 var(--font-display); position: relative; z-index: 1;
+}
+.steps li:not(:last-child)::after { content: ""; position: absolute; left: calc(1.125rem - 1px); top: 2.25rem; bottom: 0; width: 2px; background: var(--accent); opacity: 0.35; }
+.steps li:last-child { padding-bottom: 0; }
+.step-body { display: flex; flex-direction: column; gap: 3px; padding-top: 5px; min-width: 0; }
+.step-body p { color: var(--ink-2); font-size: 0.9375rem; }
+.step-body .tech { font-size: 0.8125rem; color: var(--ink-3); }
+.you { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--accent); color: var(--paper); font: 600 0.75rem/1.5 var(--font-body); vertical-align: 2px; }
+
+.ledger { display: flex; flex-direction: column; gap: 16px; align-self: start; position: sticky; top: 16px; }
+@media (max-width: 860px) { .ledger { position: static; } }
+.ledger-box { border-radius: 14px; padding: 14px 16px; background: var(--paper); border: 1px solid var(--rule); display: flex; flex-direction: column; gap: 6px; }
+.ledger-box h3 { font-size: 0.9375rem; }
+.ledger-box ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 0.875rem; display: flex; flex-direction: column; gap: 4px; }
+.ledger-box.out h3 { color: var(--accent); }
+.ledger-box.out p { font: 800 1.75rem/1 var(--font-display); letter-spacing: -0.03em; }
+
+.exit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 720px) { .exit { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Saved table ---------- */
+.table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: 0.9375rem; }
+th, td { text-align: left; vertical-align: top; padding: 12px 16px; border-bottom: 1px solid var(--rule); }
+thead th { font-size: 0.8125rem; font-weight: 600; color: var(--ink-3); background: var(--paper-2); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+tbody th { font-weight: 600; width: 22%; }
+td.where { width: 36%; }
+td { color: var(--ink-2); }
+.warn { border-left: 3px solid var(--gold); padding: 4px 0 4px 16px; }
+.warn p + p { margin-top: 6px; }
+
+/* ---------- Features ---------- */
+.features { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 32px; }
+@media (max-width: 720px) { .features { grid-template-columns: minmax(0, 1fr); } }
+.features li { display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid var(--rule); min-width: 0; }
+.features p { color: var(--ink-2); font-size: 0.9375rem; }
+.groups { display: flex; flex-wrap: wrap; gap: 8px; }
+.group { border: 1px solid var(--rule); border-radius: 999px; padding: 4px 12px; font-size: 0.875rem; color: var(--ink-2); }
+.group b { font-family: var(--font-display); color: var(--ink); margin-right: 4px; }
+
+/* ---------- Caption timing demo ---------- */
+.demo { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 24px; align-items: center; }
+@media (max-width: 720px) { .demo { grid-template-columns: minmax(0, 1fr); } }
+.frame {
+  aspect-ratio: 9 / 16; max-width: 100%; width: 15rem; border-radius: 22px; background: var(--screen);
+  border: 6px solid #1d1d22; display: flex; align-items: center; justify-content: center; padding: 16px;
+  margin-inline: auto;
+}
+.cap { text-align: center; font: 800 1.35rem/1.15 var(--font-display); letter-spacing: -0.01em; color: var(--screen-ink); }
+.cap span { opacity: 0.32; transition: opacity 0.12s linear; }
+.cap span.on { opacity: 1; }
+.cap .hero-word { font: italic 400 1.9rem/1 var(--font-serif); color: var(--screen-gold); letter-spacing: 0; }
+.track { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.lane { position: relative; height: 54px; border-radius: 10px; background: var(--paper-2); border: 1px solid var(--rule); overflow: hidden; }
+.chip { position: absolute; top: 8px; bottom: 8px; border-radius: 6px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); display: flex; align-items: center; justify-content: center; font-size: 0.8125rem; font-weight: 600; color: var(--ink); overflow: hidden; white-space: nowrap; }
+.chip.gold { border-color: var(--gold); color: var(--gold); }
+.chip.on { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+.chip.gold.on { background: var(--gold); color: var(--paper); border-color: var(--gold); }
+.voice { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); }
+.ticks { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.demo-note { font-size: 0.875rem; color: var(--ink-3); }
+
+/* ---------- Science ---------- */
+.rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.rules li { display: grid; grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr); gap: 4px 24px; padding-block: 16px; border-top: 1px solid var(--rule); }
+.rules .num { font: 800 1.5rem/1.1 var(--font-display); letter-spacing: -0.02em; color: var(--accent); font-variant-numeric: tabular-nums; }
+.rules .why { display: flex; flex-direction: column; gap: 3px; }
+.rules .why p { color: var(--ink-2); font-size: 0.9375rem; }
+@media (max-width: 640px) { .rules li { grid-template-columns: minmax(0, 1fr); } }
+
+.sources { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 0.9375rem; color: var(--ink-2); }
+footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 0.875rem; color: var(--ink-3); display: flex; flex-direction: column; gap: 6px; }
+
+@media (prefers-reduced-motion: reduce) { .cap span { transition: none; } }
+</style>
+</head>
+<body>
+
+
+<div class="page">
+<div class="wrap">
+  <header class="bar">
+    <a class="mark" href="./">The Studio <span>Sound</span></a>
+    <a class="open" href="./">Open the editor</a>
+  </header>
+
+  <section class="hero read">
+    <h1>How The Studio Sound works</h1>
+    <p class="lead">It is a web page that does all the work on your own device. Open it on your iPhone or your laptop, drop in a Reel, and the listening, the captions, the sound and the export all happen inside your browser. Your video is never sent to a server.</p>
+    <dl class="answers">
+      <div><dt>Where does it run?</dt><dd>In the browser of whichever device you open it on. The website works in Safari on your iPhone 17 and in Chrome or Edge on your laptop. The laptop also has its own offline copy.</dd></div>
+      <div><dt>Where is it hosted?</dt><dd>On GitHub Pages, built from your GitHub repository. It is not hosted on Google Drive; Drive only keeps a note with the links.</dd></div>
+      <div><dt>What does it cost?</dt><dd>Nothing. No account, no subscription, no limits on length or exports.</dd></div>
+    </dl>
+  </section>
+
+  <section aria-labelledby="flow-title">
+    <div class="read">
+      <h2 id="flow-title">From your voice to the finished Reel</h2>
+      <p class="lead" style="margin-top:10px">The path a video takes, top to bottom. Everything inside the dashed box happens on your phone or laptop.</p>
+    </div>
+
+    <div class="flow">
+      <div class="devices">
+        <div class="node device">
+          <h3>On your iPhone 17</h3>
+          <p>Open the website in Safari. It can sit on your Home Screen like an app.</p>
+          <p class="where">rahulwala10.github.io/The-Studio_SoundSFX</p>
+        </div>
+        <div class="node device">
+          <h3>On your laptop</h3>
+          <p>Open the same website in Chrome or Edge, or double-click <b>Start The Studio Sound.bat</b> to run the offline copy.</p>
+          <p class="path">R:\Cowork OS\Content Creation OS\sound-editor</p>
+        </div>
+      </div>
+
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 40"><path d="M12 2v34M5 29l7 7 7-7"/></svg></div>
+
+      <div class="node">
+        <h3>The app loads into your browser</h3>
+        <p>GitHub Pages, or the little server in the laptop copy, sends the app: its code, its fonts, the 47 templates and the list of sounds. This is the only thing that comes from the internet each time, and only in one direction, down to you.</p>
+      </div>
+
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 40"><path d="M12 2v34M5 29l7 7 7-7"/></svg></div>
+
+      <div class="boundary" role="group" aria-labelledby="box-title">
+        <div>
+          <p class="boundary-title" id="box-title">Inside your browser, on your device</p>
+          <p class="boundary-sub">Nine steps. Two of them are yours, the rest happen by themselves in a minute or two.</p>
+          <ol class="steps">
+            <li><div class="step-body">
+              <h3>You pick your video <span class="you">You</span></h3>
+              <p>The browser reads the file straight from your phone or laptop. A copy is kept in this browser so the project opens again later.</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>It listens</h3>
+              <p>The sound is pulled out and turned into the simple form speech models read: one channel, 16,000 samples a second.</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>It writes the words</h3>
+              <p>Whisper, OpenAI's open speech-recognition model, turns the speech into words, each with its own start and end time. The laptop uses the Small model, the phone uses Base. Speak Hindi or Hinglish and tick <b>Write the captions in English</b>: Whisper translates as it listens, so the English words still follow your voice.</p>
+              <p class="tech">Run by Transformers.js and ONNX Runtime Web. The model downloads once from Hugging Face, then stays in the browser.</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>It lines up the timing</h3>
+              <p>Every word lights up 0.08 seconds before it is spoken, so your eye arrives at the same moment as the voice.</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>It picks the words that matter</h3>
+              <p>One punch word per phrase, plus names and numbers, become stand-out words. A caption without one lifts its strongest word, never a little word like "the".</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>It cuts the captions</h3>
+              <p>Each gap between words gets a score: a sentence end is best, then a comma, then a pause, then the gap before "and", "but" or a preposition. It never cuts after "a", "the", "to" or "my". The template then sets how many words show at once.</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>You style and fix <span class="you">You</span></h3>
+              <p>A template is a set of fonts, colours and motion drawn over the video live. Change the template or its colour preset, fix any word in the Transcript, move a stand-out, and turn on the Reels safe-zone guide. Changed one caption? <b>Apply to all</b> copies it to every caption. Like the result? <b>Save as my template</b> and new projects start with it.</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>It places the sound</h3>
+              <p>Open the <b>Sounds</b> tab. It measures how loud your voice is, finds your pauses and the cuts in the video, and reads the mood of what you say. Then it places sound effects where they have a job: a whoosh on a pause before a new point, a click on "first" and "second", a soft chime on good news, a ding on "follow". A music bed that suits the mood plays under everything, dips while you talk and rises a little in the gaps. Pick <b>Subtle</b> or <b>Punchy</b>, swap or mute any sound, and hear it all with the preview.</p>
+              <p class="tech">Loudness is measured the broadcast way (ITU-R BS.1770). Mood comes from VADER, a word-based sentiment model, running in the browser. The sounds are free to use: CC0 and public domain.</p>
+            </div></li>
+            <li><div class="step-body">
+              <h3>It exports</h3>
+              <p>Frame by frame, the video and the caption layer are drawn together, encoded as H.264 and packed into an MP4. Your original audio is copied across untouched. The sound track saves separately, as a short video for Edits or a WAV file, so you can set its level against your voice yourself.</p>
+              <p class="tech">WebCodecs does the encoding, Mediabunny builds the MP4. Quality is Best by default on both laptop and phone, about 30 Mbps at 1080p. A video smaller than 1080 × 1920 is exported at Instagram size, so the captions stay sharp.</p>
+            </div></li>
+          </ol>
+        </div>
+        <aside class="ledger" aria-label="What crosses the internet">
+          <div class="ledger-box">
+            <h3>Comes in</h3>
+            <ul>
+              <li>The app, each time you open it</li>
+              <li>The Whisper model, the first time only</li>
+              <li>The sounds a Reel uses, when you open the Sounds tab</li>
+            </ul>
+          </div>
+          <div class="ledger-box out">
+            <h3>Goes out</h3>
+            <p>Nothing</p>
+            <span class="note">No uploads and no account. Your video, words and edits stay on the device.</span>
+          </div>
+        </aside>
+      </div>
+
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 24 40"><path d="M12 2v34M5 29l7 7 7-7"/></svg></div>
+
+      <div class="exit">
+        <div class="node">
+          <h3>An MP4 on your device</h3>
+          <p>On the laptop you choose where it saves. On the iPhone it goes to Files, in Downloads; tap it, then Share and Save Video to put it in Photos.</p>
+        </div>
+        <div class="node">
+          <h3>Edits, then Instagram</h3>
+          <p>In Instagram's Edits app, add the captioned MP4, go to the very start, then Audio, Import, and pick the sound-track video. Post it as a Reel. In Instagram's settings, turn on "Upload at highest quality" so the captions stay sharp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="saved-title">
+    <div class="read">
+      <h2 id="saved-title">Where everything is saved</h2>
+      <p class="lead" style="margin-top:10px">Each device keeps its own work. Your iPhone and your laptop do not share a project list, so use a backup to move a project between them.</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col">What</th><th scope="col">Where it lives</th><th scope="col">Good to know</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">The app</th><td class="where">Your GitHub repository, served as a website by GitHub Pages</td><td>When a new version is pushed, the website updates by itself.</td></tr>
+          <tr><th scope="row">The laptop copy</th><td class="where"><span class="path">R:\Cowork OS\Content Creation OS\sound-editor</span></td><td>Works without internet once the Whisper model has downloaded on that laptop.</td></tr>
+          <tr><th scope="row">Your projects</th><td class="where">Inside the browser you made them in (its built-in database)</td><td>Safari on the iPhone and Chrome on the laptop each keep their own list. Clearing the browser's website data deletes them.</td></tr>
+          <tr><th scope="row">The video inside a project</th><td class="where">The same browser storage</td><td>To save space, older videos can be cleared. If that happens, the app asks you to pick the video again and keeps all your edits.</td></tr>
+          <tr><th scope="row">Sound choices for a Reel</th><td class="where">The browser you made them in</td><td>Style, music, levels, muted and swapped sounds are kept per project.</td></tr>
+          <tr><th scope="row">The sound library</th><td class="where">Shipped with the app; the full library is on the laptop in <span class="path">studio\library</span></td><td>119 sound effects and 32 music beds ship in the app. The laptop keeps the bigger collection.</td></tr>
+          <tr><th scope="row">Your own templates</th><td class="where">The browser you saved them in</td><td>Laptop and phone keep separate lists. A project backup carries its template with it.</td></tr>
+          <tr><th scope="row">Backups</th><td class="where">A <span class="path">.tscaps</span> file, wherever you save it</td><td>Save a backup from the editor, then Open a backup on the other device. Drive is a good home for them.</td></tr>
+          <tr><th scope="row">Finished videos</th><td class="where">Downloads on the laptop, Files on the iPhone</td><td>Your original video is never changed.</td></tr>
+          <tr><th scope="row">The Whisper model</th><td class="where">Browser storage, after the first download</td><td>Small (laptop) is a bigger download than Base (phone).</td></tr>
+          <tr><th scope="row">Source code and releases</th><td class="where">The same GitHub repository, in <span class="path">source/</span> and <span class="path">releases/</span></td><td>Each release has a Windows package for the laptop.</td></tr>
+          <tr><th scope="row">Google Drive</th><td class="where">A note, "The Studio - where everything is"</td><td>Only links and notes. The tool itself does not run from Drive.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn read">
+      <p><b>One thing to know about the iPhone.</b> Safari clears a website's saved data if you use Safari for 7 days without opening that site. For anything you care about, save a backup.</p>
+      <p class="note">Adding the site to your Home Screen (Share, then Add to Home Screen) helps: the app then keeps its own storage, counted only on days you use it. It also keeps a separate project list from Safari.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="features-title">
+    <div class="read">
+      <h2 id="features-title">What you can do with it</h2>
+    </div>
+    <div class="groups" aria-label="Template groups">
+      <span class="group"><b>27</b>The Studio</span>
+      <span class="group"><b>6</b>Cinematic</span>
+      <span class="group"><b>7</b>Professional</span>
+      <span class="group"><b>7</b>Creative</span>
+    </div>
+    <ul class="features">
+      <li><h3>47 templates</h3><p>Every one pairs two fonts and comes with colour presets. Cinematic for story and mood, Professional for teaching and business, Creative for art and personality.</p></li>
+      <li><h3>Stand-out words, picked for you</h3><p>The punch word, names and numbers get the second font and colour. Tap any word to change it.</p></li>
+      <li><h3>Captions that break where you breathe</h3><p>Cuts land on sentence ends, commas and pauses, and the words split evenly instead of leaving one alone.</p></li>
+      <li><h3>Motion with a job</h3><p>Typewriter, word-by-word reveal, underline sweeps, stamps and paper cut-outs, each timed to the word being said.</p></li>
+      <li><h3>Apply to all</h3><p>Change one caption, word or emoji, then apply it to every caption, every stand-out word or every word in one tap.</p></li>
+      <li><h3>Your own templates</h3><p>Save colours, fonts, sizes, position and motion as a template of your own, and start new projects with it.</p></li>
+      <li><h3>Hindi and Hinglish to English</h3><p>Speak Hindi or Hinglish and get English captions timed to your voice.</p></li>
+      <li><h3>Best quality export</h3><p>About 30 Mbps at 1080p, and small videos are exported at Instagram size so the text stays sharp.</p></li>
+      <li><h3>Simple controls</h3><p>Text colour, stand-out colour, font and size, and edge contrast to make text stand off bright footage.</p></li>
+      <li><h3>Reels safe-zone guide</h3><p>The phone button in the editor shows where Instagram's caption, buttons and profile line cover the video.</p></li>
+      <li><h3>Transcript editing</h3><p>Fix any word Whisper got wrong in the Transcript tab; the timing stays with it.</p></li>
+      <li><h3>Backups</h3><p>Move a project between your iPhone and laptop, or keep a safe copy on Drive.</p></li>
+      <li><h3>Sound effects that fit</h3><p>Whooshes on pauses, clicks on lists, chimes on good news, a ding on your call to action. Never on a sad sentence with a funny sound.</p></li>
+      <li><h3>A music bed</h3><p>32 tracks in nine moods, picked to match what you say. It dips under your voice and rises in the gaps.</p></li>
+      <li><h3>Sound track for Edits</h3><p>Save it as a short video (Edits: Audio, Import) or a WAV for CapCut, then set the level against your voice.</p></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="science-title">
+    <div class="read">
+      <h2 id="science-title">The science behind it</h2>
+      <p class="lead" style="margin-top:10px">Most people watch Reels with the sound off, so the captions have to carry the whole Reel. Every template follows the same reading rules.</p>
+    </div>
+
+    <div class="demo">
+      <div class="frame" role="img" aria-label="A caption reading I know what you're thinking, with thinking in a gold italic serif">
+        <p class="cap" id="cap"><span data-i="0">I</span> <span data-i="1">know</span> <span data-i="2">what</span><br><span data-i="3">you're</span> <span class="hero-word" data-i="4">thinking</span></p>
+      </div>
+      <div class="track">
+        <h3>Every word has its own time</h3>
+        <div class="lane" id="lane" aria-hidden="true"></div>
+        <div class="ticks" aria-hidden="true"><span>0.0 s</span><span>0.5 s</span><span>1.0 s</span><span>1.5 s</span><span>2.0 s</span></div>
+        <p class="demo-note">The black line is the voice. Each word lights up 0.08 s before the voice reaches it, and "thinking", the stand-out word, gets the serif and the gold.</p>
+      </div>
+    </div>
+
+    <ul class="rules">
+      <li><span class="num">2 to 5</span><div class="why"><h3>Words per caption on fast Reels</h3><p>People read captions at about 160 to 180 words a minute. Energetic templates show 2 to 5 words, calm ones 4 to 8, trailer-style ones 1 to 3. Never more than two lines.</p></div></li>
+      <li><span class="num">3.7–5.4%</span><div class="why"><h3>Text height, as a share of the frame</h3><p>Big enough to read at arm's length on a phone, small enough to leave your face clear. No thin or light weights, which break up on compressed video.</p></div></li>
+      <li><span class="num">7 : 1</span><div class="why"><h3>Contrast for text on video</h3><p>Text sitting on the video gets a soft dark edge so it keeps at least 7 to 1 contrast, the strictest web accessibility level. Text on a plate needs 4.5 to 1. A checker tests every colour pair in all 47 templates.</p></div></li>
+      <li><span class="num">1</span><div class="why"><h3>Stand-out word per caption</h3><p>One place for the eye to land. Two highlights compete, and the viewer reads neither.</p></div></li>
+      <li><span class="num">0.12–0.6 s</span><div class="why"><h3>How long motion lasts</h3><p>Fast enough to keep pace with speech, slow enough to be seen. Shorter reads as flicker; longer lags behind the voice.</p></div></li>
+      <li><span class="num">0.08 s</span><div class="why"><h3>Timing lead</h3><p>Words that appear slightly early feel in sync; words that appear late feel wrong. Checked against real voice starts: within 0.08 s either way.</p></div></li>
+      <li><span class="num">15–18 LU</span><div class="why"><h3>Music under the voice</h3><p>Listeners need speech at least 10 LU above the music to follow it easily, and most people prefer more. The music bed sits 15 (Punchy) to 18 (Subtle) LU under your voice while you talk.</p></div></li>
+      <li><span class="num">−7 to −24 dB</span><div class="why"><h3>Sound effects under the voice</h3><p>Every effect is set against your measured voice and never goes above it. A big hit sits about 7 to 12 dB under, a pop or whoosh 11 to 15 dB under, a typing texture 20 to 24 dB under, and 2 to 3 dB lower again when it lands on your words.</p></div></li>
+      <li><span class="num">45 / 125 ms</span><div class="why"><h3>How far a sound can drift</h3><p>A sound more than 45 ms early or 125 ms late is noticed. Whooshes are timed so their peak lands on the moment, not their start.</p></div></li>
+      <li><span class="num">Bottom third</span><div class="why"><h3>Kept clear for Instagram</h3><p>Instagram covers roughly the bottom third with your caption and buttons, a strip at the top, and the right edge with likes and shares. Captions sit in the space between.</p></div></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="sources-title" class="read">
+    <h2 id="sources-title">Sources</h2>
+    <ul class="sources">
+      <li><a href="https://www.bbc.co.uk/accessibility/forproducts/guides/subtitles/" target="_blank" rel="noopener noreferrer">BBC Subtitle Guidelines</a>, for reading speed and where to break lines</li>
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html" target="_blank" rel="noopener noreferrer">W3C, Understanding Contrast (Enhanced)</a>, for the 7 to 1 rule</li>
+      <li><a href="https://arxiv.org/abs/2212.04356" target="_blank" rel="noopener noreferrer">Radford et al., Robust Speech Recognition via Large-Scale Weak Supervision</a>, the Whisper paper</li>
+      <li><a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener noreferrer">Transformers.js</a>, which runs Whisper in the browser</li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API" target="_blank" rel="noopener noreferrer">MDN, WebCodecs API</a>, the browser's video encoder</li>
+      <li><a href="https://www.itu.int/rec/R-REC-BS.1770" target="_blank" rel="noopener noreferrer">ITU-R BS.1770</a>, how loudness is measured</li>
+      <li><a href="https://cris.fau.de/publications/234640600" target="_blank" rel="noopener noreferrer">Torcoli et al., Preferred levels for background ducking to produce esthetically pleasing audio for TV with clear speech</a>, for music under speech</li>
+      <li><a href="https://itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1359-0-199802-S!!PDF-E.pdf" target="_blank" rel="noopener noreferrer">ITU-R BT.1359, Relative timing of sound and vision</a>, for how far a sound can drift</li>
+      <li><a href="https://ojs.aaai.org/index.php/ICWSM/article/view/14550" target="_blank" rel="noopener noreferrer">Hutto and Gilbert, VADER</a>, the sentiment model that reads the mood</li>
+      <li><a href="https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/" target="_blank" rel="noopener noreferrer">WebKit, Full Third-Party Cookie Blocking and More</a>, on Safari's 7-day storage rule</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>The Studio Sound by Rahul Wala, built on <a href="https://github.com/francozanardi/tscaps" target="_blank" rel="noopener noreferrer">tscaps</a> by Franco Zanardi. Engine and templates MIT, editor AGPL-3.0.</p>
+    <p><a href="https://github.com/rahulwala10/The-Studio_SoundSFX" target="_blank" rel="noopener noreferrer">Source code and sound credits on GitHub</a></p>
+  </footer>
+</div>
+</div>
+
+<script>
+(function () {
+  var LEAD = 0.08, END = 2.0;
+  var words = [
+    { w: 'I', s: 0.10, e: 0.24 },
+    { w: 'know', s: 0.24, e: 0.52 },
+    { w: 'what', s: 0.52, e: 0.78 },
+    { w: "you're", s: 0.78, e: 1.08 },
+    { w: 'thinking', s: 1.08, e: 1.72, gold: true }
+  ];
+  var lane = document.getElementById('lane');
+  var cap = document.getElementById('cap');
+  if (!lane || !cap) return;
+  var spans = cap.querySelectorAll('span[data-i]');
+  var chips = words.map(function (w) {
+    var c = document.createElement('div');
+    c.className = 'chip' + (w.gold ? ' gold' : '');
+    c.style.left = ((w.s - LEAD) / END * 100) + '%';
+    c.style.width = ((w.e - w.s) / END * 100 - 0.6) + '%';
+    c.textContent = w.w;
+    lane.appendChild(c);
+    return c;
+  });
+  var voice = document.createElement('div');
+  voice.className = 'voice';
+  lane.appendChild(voice);
+
+  function show(t) {
+    voice.style.left = (t / END * 100) + '%';
+    words.forEach(function (w, i) {
+      var on = t >= w.s - LEAD;
+      chips[i].classList.toggle('on', on && t < w.e - LEAD);
+      spans[i].classList.toggle('on', on);
+    });
+  }
+
+  var reduced = false;
+  try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  if (reduced) { show(1.2); return; }
+  var start = null, LOOP = 3.2;
+  function tick(now) {
+    if (start === null) start = now;
+    var t = ((now - start) / 1000) % LOOP;
+    show(Math.min(t, END));
+    requestAnimationFrame(tick);
+  }
+  show(1.2);
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>
