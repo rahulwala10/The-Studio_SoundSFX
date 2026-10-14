@@ -1,4 +1,4 @@
-# The Studio Sound library: credits and licences
+# The Studio - Captions and Sound library: credits and licences
 
 Every sound and track here is free to use in your videos, including monetised social media, with no credit needed.
 

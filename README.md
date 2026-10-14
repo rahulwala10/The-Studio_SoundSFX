@@ -1,16 +1,21 @@
-# The Studio Sound
+# The Studio - Captions and Sound
 
 **Captions, sound effects and background music for Reels, by Rahul Wala.**
 
-Open it: **https://rahulwala10.github.io/The-Studio_SoundSFX/**
+Open it: **https://rahulwala10.github.io/captions-and-sound/** (the same as
+https://rahulwala10.github.io/The-Studio_SoundSFX/)
+
+On an iPhone, use **The Studio - iPhone**: **https://rahulwala10.github.io/iphone/**
 
 How it works: **https://rahulwala10.github.io/The-Studio_SoundSFX/how-it-works.html**
 
-The Studio Sound is [The Studio Captions](https://rahulwala10.github.io/The-Studio---Transcription-and-Typology-repository/)
-plus a **Sounds** tab. Drop in a Reel: it writes the captions from your voice,
-then listens to what you say and places sound effects and a music bed that fit
-it, always under your voice. Everything runs in your browser, on your iPhone or
-laptop. Your video is never uploaded.
+Drop in a Reel: it writes the captions from your voice with the Medium speech
+model and 47 templates, then listens to what you say and places sound effects
+and a music bed that fit it, always under your voice. On the laptop, finished
+videos and sound tracks go straight into the folder you picked once (Google
+Drive, 05 Finished Reels). Everything runs in your browser. Your video is never
+uploaded. (This tool used to be called The Studio Sound; The Studio Captions,
+the captions-only tool, is retired and forwards here.)
 
 ## The Sounds tab
 
@@ -49,24 +54,24 @@ laptop: **https://rahulwala10.github.io/The-Studio_SoundSFX/sounds/listen.html**
 
 ## Releases
 
-- `releases/v1.1/` (latest, 14 October 2026): lighter on the iPhone. About
-  half the memory at its highest and five times less while you work in
-  Sounds, and a way out if a project ever sits on "Loading project". See its
-  `RELEASE-NOTES.md`. For the laptop, unzip
-  `the-studio-sound-v1.1-windows.zip`, then unzip
-  `the-studio-sound-v1.1-sounds.zip` in the same place (it fills
-  `app/sounds/`), and double-click `Start The Studio Sound.bat`. It opens at
-  http://localhost:5179. The two parts are split to stay under GitHub's file
-  size limit.
-- `releases/v1.0/`: the first release.
+- `releases/v1.2/` (latest, 14 October 2026): the new name, Medium on the
+  laptop, exports straight into a remembered folder, and The Studio - iPhone.
+  See its `RELEASE-NOTES.md`. The Windows package and the sound files for
+  v1.2 are kept in Google Drive (The Studio, Tool releases) to keep this
+  repository small: unzip `the-studio-captions-and-sound-v1.2-windows.zip`,
+  then `the-studio-captions-and-sound-v1.2-sounds.zip` in the same place, and
+  double-click `Start The Studio - Captions and Sound.bat`. It opens at
+  http://localhost:5179.
+- `releases/v1.1/` and `releases/v1.0/`: earlier releases, under the old name
+  The Studio Sound.
 
 ## Built on tscaps
 
-The Studio Sound is built on [tscaps](https://github.com/francozanardi/tscaps),
+The Studio - Captions and Sound is built on [tscaps](https://github.com/francozanardi/tscaps),
 the open-source caption editor by Franco Zanardi. Its engine and templates are
 MIT-licensed (`LICENSE-engine-MIT.txt`), and its editor app is AGPL-3.0
 (`LICENSE-editor-AGPL-3.0.txt`). As the AGPL asks, the full source of this
-version is here, in `source/the-studio-sound-source.zip`; the sound files
+version is here, in `source/the-studio-captions-and-sound-source.zip` (the same source builds The Studio - iPhone); the sound files
 themselves are in `sounds/`.
 
 This repository holds the built site that GitHub Pages serves, plus the source

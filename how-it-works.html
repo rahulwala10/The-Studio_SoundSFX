@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Where The Studio Sound runs, where your work is saved, and how a video becomes a Reel with captions, sound effects and music.">
+<meta name="description" content="Where The Studio runs, where your work is saved, and how a video becomes a Reel with captions, sound effects and music.">
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<title>How The Studio Sound works</title>
+<title>How The Studio works</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
@@ -200,7 +200,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule);
   </header>
 
   <section class="hero read">
-    <h1>How The Studio Sound works</h1>
+    <h1>How The Studio works</h1>
     <p class="lead">It is a web page that does all the work on your own device. Open it on your iPhone or your laptop, drop in a Reel, and the listening, the captions, the sound and the export all happen inside your browser. Your video is never sent to a server.</p>
     <dl class="answers">
       <div><dt>Where does it run?</dt><dd>In the browser of whichever device you open it on. The website works in Safari on your iPhone 17 and in Chrome or Edge on your laptop. The laptop also has its own offline copy.</dd></div>
@@ -218,14 +218,15 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule);
     <div class="flow">
       <div class="devices">
         <div class="node device">
-          <h3>On your iPhone 17</h3>
-          <p>Open the website in Safari. It can sit on your Home Screen like an app.</p>
-          <p class="where">rahulwala10.github.io/The-Studio_SoundSFX</p>
+          <h3>On your iPhone 17: The Studio - iPhone</h3>
+          <p>Open it in Safari and add it to your Home Screen. It uses the light Base speech model, set up for the phone.</p>
+          <p class="where">rahulwala10.github.io/iphone</p>
         </div>
         <div class="node device">
-          <h3>On your laptop</h3>
-          <p>Open the same website in Chrome or Edge, or double-click <b>Start The Studio Sound.bat</b> to run the offline copy.</p>
-          <p class="path">R:\Cowork OS\Content Creation OS\sound-editor</p>
+          <h3>On your laptop: The Studio - Captions and Sound</h3>
+          <p>Open the website in Chrome or Edge, or double-click <b>Start The Studio - Captions and Sound.bat</b> to run the offline copy (faster with the Medium model).</p>
+          <p class="where">rahulwala10.github.io/captions-and-sound</p>
+          <p class="path">R:\Cowork OS\Content Creation OS\01 The Studio tools\The Studio - Captions and Sound</p>
         </div>
       </div>
 
@@ -253,7 +254,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule);
             </div></li>
             <li><div class="step-body">
               <h3>It writes the words</h3>
-              <p>Whisper, OpenAI's open speech-recognition model, turns the speech into words, each with its own start and end time. The laptop uses the Small model, the phone uses Base. Speak Hindi or Hinglish and tick <b>Write the captions in English</b>: Whisper translates as it listens, so the English words still follow your voice.</p>
+              <p>Whisper, OpenAI's open speech-recognition model, turns the speech into words, each with its own start and end time. The laptop uses the Medium model (the most accurate, and the best at Hindi to English), the phone uses Base. Speak Hindi or Hinglish and tick <b>Write the captions in English</b>: Whisper translates as it listens, so the English words still follow your voice.</p>
               <p class="tech">Run by Transformers.js and ONNX Runtime Web. The model downloads once from Hugging Face, then stays in the browser.</p>
             </div></li>
             <li><div class="step-body">
@@ -306,7 +307,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule);
       <div class="exit">
         <div class="node">
           <h3>An MP4 on your device</h3>
-          <p>On the laptop you choose where it saves. On the iPhone it goes to Files, in Downloads; tap it, then Share and Save Video to put it in Photos.</p>
+          <p>On the laptop it goes straight into the folder you picked once (Google Drive, The Studio, 05 Finished Reels), named with the date and the project name. On the iPhone, tap <b>Save to Drive</b> and pick Drive, or <b>Save to Files</b> to keep it on the phone.</p>
         </div>
         <div class="node">
           <h3>Edits, then Instagram</h3>
@@ -333,8 +334,8 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule);
           <tr><th scope="row">The sound library</th><td class="where">Shipped with the app; the full library is on the laptop in <span class="path">studio\library</span></td><td>119 sound effects and 32 music beds ship in the app. The laptop keeps the bigger collection.</td></tr>
           <tr><th scope="row">Your own templates</th><td class="where">The browser you saved them in</td><td>Laptop and phone keep separate lists. A project backup carries its template with it.</td></tr>
           <tr><th scope="row">Backups</th><td class="where">A <span class="path">.tscaps</span> file, wherever you save it</td><td>Save a backup from the editor, then Open a backup on the other device. Drive is a good home for them.</td></tr>
-          <tr><th scope="row">Finished videos</th><td class="where">Downloads on the laptop, Files on the iPhone</td><td>Your original video is never changed.</td></tr>
-          <tr><th scope="row">The Whisper model</th><td class="where">Browser storage, after the first download</td><td>Small (laptop) is a bigger download than Base (phone).</td></tr>
+          <tr><th scope="row">Finished videos</th><td class="where">Google Drive, 05 Finished Reels (laptop, straight in; iPhone, Save to Drive)</td><td>So the laptop's exports are on your phone too. Your original video is never changed.</td></tr>
+          <tr><th scope="row">The Whisper model</th><td class="where">Browser storage, after the first download</td><td>Medium (laptop) is about 940 MB the first time; Base (phone) about 75 MB.</td></tr>
           <tr><th scope="row">Source code and releases</th><td class="where">The same GitHub repository, in <span class="path">source/</span> and <span class="path">releases/</span></td><td>Each release has a Windows package for the laptop.</td></tr>
           <tr><th scope="row">Google Drive</th><td class="where">A note, "The Studio - where everything is"</td><td>Only links and notes. The tool itself does not run from Drive.</td></tr>
         </tbody>
@@ -424,7 +425,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule);
   </section>
 
   <footer>
-    <p>The Studio Sound by Rahul Wala, built on <a href="https://github.com/francozanardi/tscaps" target="_blank" rel="noopener noreferrer">tscaps</a> by Franco Zanardi. Engine and templates MIT, editor AGPL-3.0.</p>
+    <p>The Studio by Rahul Wala, built on <a href="https://github.com/francozanardi/tscaps" target="_blank" rel="noopener noreferrer">tscaps</a> by Franco Zanardi. Engine and templates MIT, editor AGPL-3.0.</p>
     <p><a href="https://github.com/rahulwala10/The-Studio_SoundSFX" target="_blank" rel="noopener noreferrer">Source code and sound credits on GitHub</a></p>
   </footer>
 </div>

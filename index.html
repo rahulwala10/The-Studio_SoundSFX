@@ -7,6 +7,13 @@
         // GitHub Pages may serve this site under a differently-cased path.
         // The router needs the exact base, so normalise it once.
         var base = '/The-Studio_SoundSFX/';
+        // A reload deep inside a tool hosted in the home site (/iphone/...)
+        // reaches the home site's 404.html, which sends it back here as
+        // ?__path=/iphone/...; put the real address back before the app starts.
+        try {
+          var back = new URLSearchParams(location.search).get('__path');
+          if (back && back.toLowerCase().indexOf(base.toLowerCase()) === 0) history.replaceState(null, '', back);
+        } catch (e) {}
         var p = location.pathname;
         if (p.toLowerCase().indexOf(base.toLowerCase()) === 0 && p.indexOf(base) !== 0) {
           location.replace(base + p.slice(base.length) + location.search + location.hash);
@@ -19,10 +26,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/The-Studio_SoundSFX/favicon.svg" />
     <link rel="apple-touch-icon" href="/The-Studio_SoundSFX/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Studio Sound" />
-    <meta name="application-name" content="The Studio Sound" />
-    <title>The Studio Sound · captions, sound effects and music for Reels</title>
-    <meta name="description" content="The Studio Sound: captions, sound effects and background music placed to fit what you say, for Instagram Reels, by Rahul Wala. Built on tscaps by Franco Zanardi." />
+    <meta name="apple-mobile-web-app-title" content="The Studio" />
+    <meta name="application-name" content="The Studio - Captions and Sound" />
+    <title>The Studio - Captions and Sound · captions, sound effects and music for Reels</title>
+    <meta name="description" content="The Studio - Captions and Sound: captions, sound effects and background music placed to fit what you say, for Instagram Reels, by Rahul Wala. Built on tscaps by Franco Zanardi." />
     <meta name="theme-color" content="#08080B" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#FAF8F4" media="(prefers-color-scheme: light)" />
     <script>
@@ -71,7 +78,7 @@
         50% { opacity: 0.25; }
       }
     </style>
-    <script type="module" crossorigin src="/The-Studio_SoundSFX/assets/index-DprCvGls.js"></script>
+    <script type="module" crossorigin src="/The-Studio_SoundSFX/assets/index-BKg4LAT5.js"></script>
     <link rel="modulepreload" crossorigin href="/The-Studio_SoundSFX/assets/index-oq4yXTHR.js">
   </head>
   <body>
