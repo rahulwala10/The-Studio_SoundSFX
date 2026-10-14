@@ -15,6 +15,9 @@ at the end).
   `.`, `?`, `!` or a gap of 0.8 s or more.
 - **Cuts in the video.** Frames are compared five times a second (brightness
   and colour histogram); a jump well above the clip's normal movement is a cut.
+  On a phone this runs only on the app's light preview copy of the video,
+  never on the full-size original, so the page stays light enough for Safari.
+  When there is no preview copy, the phone places sounds on your words only.
 - **The mood.** Each sentence gets a sentiment score from VADER (a word-based
   model built for social media text). The first sentence counts 1.5 times.
   Speaking rate and how much your voice level moves give the energy.
@@ -96,6 +99,27 @@ onset, high-passed at 50 Hz, faded, and normalised to −16 LUFS momentary max
 (ambiences −20); music to −20 LUFS. Sounds with little mid-range energy were
 left out, because phone speakers roll off below about 800 Hz and those sounds
 disappear on a phone. Full credits: `apps/studio/public/sounds/CREDITS.md`.
+
+## 7. Staying light on the phone (v1.1)
+
+Safari closes a page that holds too much memory, and the page then reloads
+and can sit on "Loading project". v1.1 keeps the page about five times
+lighter for the sound work (measured in Chromium on a 31-second Reel: about
+1.6 GB before, about 300 MB after).
+
+- **Only what the plan plays is kept.** Each sound is decoded when first
+  needed; music is cut to the Reel's length plus 3 seconds (a 2.5-minute
+  track is about 50 MB once decoded; a Reel needs a fraction of that).
+  Trying other music lets go of the one before.
+- **The speech model is let go** 15 seconds after it finishes, and loads
+  again for the next transcription.
+- **Cuts are found on the light preview copy** on a phone (see section 1),
+  drawing each frame at 24 x 24 pixels and freeing it at once.
+- **Export comes first.** When an export starts, every sound and the audio
+  clock are let go; they come back the next time you press play.
+- **A way out.** If a project is still loading after 20 seconds (90 seconds
+  while the original video downloads), the screen offers **Open again** and
+  **Back to projects**. The project is saved either way.
 
 ## Sources
 

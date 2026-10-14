@@ -49,12 +49,16 @@ laptop: **https://rahulwala10.github.io/The-Studio_SoundSFX/sounds/listen.html**
 
 ## Releases
 
-- `releases/v1.0/`: the first release. For the laptop, unzip
-  `the-studio-sound-v1.0-windows.zip`, then unzip
-  `the-studio-sound-v1.0-sounds.zip` in the same place (it fills
+- `releases/v1.1/` (latest, 14 October 2026): lighter on the iPhone. About
+  half the memory at its highest and five times less while you work in
+  Sounds, and a way out if a project ever sits on "Loading project". See its
+  `RELEASE-NOTES.md`. For the laptop, unzip
+  `the-studio-sound-v1.1-windows.zip`, then unzip
+  `the-studio-sound-v1.1-sounds.zip` in the same place (it fills
   `app/sounds/`), and double-click `Start The Studio Sound.bat`. It opens at
   http://localhost:5179. The two parts are split to stay under GitHub's file
   size limit.
+- `releases/v1.0/`: the first release.
 
 ## Built on tscaps
 
